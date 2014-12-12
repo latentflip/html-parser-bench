@@ -1,33 +1,43 @@
 {
-    "name": "node-html-parser-bench",
-    "description": "Benchmark for node.js HTML5 parsers",
-    "version": "0.1.0",
-    "author": "Ivan Nikulin (ifaaan@gmail.com, https://github.com/inikulin)",
-    "keywords": [
-        "node",
-        "html",
-        "parser",
-        "benchmark"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/inikulin/node-html5-parser-benchmark.git"
-    },
-    "main": "./benchmark.js",
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "https://raw.github.com/inikulin/parse5/master/LICENSE"
-        }
-    ],
-    "dependencies": {
-        "benchmark": "~1.0.0",
-        "html5": "*",
-        "parse5": "*",
-        "htmlparser2": "*",
-        "htmlparser " : "*"
-    },
-    "optionalDependencies": {
-        "microtime": "~0.4.0"
+  "name": "node-html-parser-bench",
+  "description": "Benchmark for node.js HTML5 parsers",
+  "version": "0.1.0",
+  "author": "Ivan Nikulin (ifaaan@gmail.com, https://github.com/inikulin)",
+  "keywords": [
+    "node",
+    "html",
+    "parser",
+    "benchmark"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/inikulin/node-html5-parser-benchmark.git"
+  },
+  "main": "./benchmark.js",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/inikulin/parse5/master/LICENSE"
     }
+  ],
+  "dependencies": {
+    "html-parse-stringify": "^1.0.1",
+    "htmlparser2": "*",
+    "parse5": "*"
+  },
+  "optionalDependencies": {
+    "microtime": "~0.4.0"
+  },
+  "devDependencies": {
+    "benchmark": "~1.0.0",
+    "beefy": "^2.1.1",
+    "brfs": "^1.2.0",
+    "browserify": "^7.0.0",
+    "uglify-js": "^2.4.16"
+  },
+  "scripts": {
+    "start": "beefy benchmark.js -- -t brfs",
+    "build": "browserify benchmark.js -t brfs > bundle.js",
+    "sizes": "source ./sizes.sh"
+  }
 }

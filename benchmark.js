@@ -1,34 +1,18 @@
-var fs = require('fs'),
-    path = require('path'),
-    Benchmark = require('benchmark'),
-    htmlparser = require("htmlparser"),
-    htmlparser2 = require('htmlparser2'),
-    html5 = require('html5'),
-    parse5 = require('parse5');
+var fs = require('fs');
+var path = require('path');
+var Benchmark = require('benchmark');
+var htmlparser2 = require('htmlparser2');
+var parse5 = require('parse5');
+var htmlParseStringify = require('html-parse-stringify');
 
-var dataDirPath = path.join(__dirname, './data'),
-    testPages = fs.readdirSync(dataDirPath).map(function (fileName) {
-        var filePath = path.join(dataDirPath, fileName);
-
-        return fs.readFileSync(filePath).toString();
-    });
+var testPages = [
+  fs.readFileSync(__dirname + '/data/page_google.html').toString(),
+  //fs.readFileSync(__dirname + '/data/page_habrahabr-70330.html').toString(),
+  //fs.readFileSync(__dirname + '/data/page_habrahabr-index.html').toString(),
+  //fs.readFileSync(__dirname + '/data/page_wikipedia.html').toString()
+];
 
 new Benchmark.Suite()
-    .add('html5 (https://github.com/aredridel/html5)', function () {
-        for (var i = 0; i < testPages.length; i++) {
-            var parser = new html5.Parser();
-            parser.parse(testPages[i]);
-        }
-    })
-
-    .add('htmlparser (https://github.com/tautologistics/node-htmlparser/)', function () {
-        for (var i = 0; i < testPages.length; i++) {
-            var handler = new htmlparser.DefaultHandler(),
-                parser = new htmlparser.Parser(handler);
-
-            parser.parseComplete(testPages[i]);
-        }
-    })
 
     .add('htmlparser2 (https://github.com/fb55/htmlparser2)', function () {
         for (var i = 0; i < testPages.length; i++) {
@@ -47,12 +31,18 @@ new Benchmark.Suite()
         }
     })
 
+    .add('htmlParseStringify (https://github.com/htmlParseStringifyjoreteg/html-parse-stringify)', function () {
+        for (var i = 0; i < testPages.length; i++) {
+            htmlParseStringify.parse(testPages[i]);
+        }
+    })
+
     .on('start', function () {
-        console.log('Starting benchmark. Fasten your seatbelts...')
+        document.write('Starting benchmark. Fasten your seatbelts...' + '<br>');
     })
 
     .on('cycle', function (event) {
-        console.log(event.target.toString());
+        document.write(event.target.toString() + '<br>');
     })
 
     .on('complete', function () {
