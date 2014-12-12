@@ -1,3 +1,6 @@
 2.7K html-parse-stringify
+1.2K html-parse-stringify.gz
 145K htmlparser2
+38K htmlparser2.gz
 260K parse5
+42K parse5.gz

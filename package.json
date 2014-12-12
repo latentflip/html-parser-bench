@@ -36,7 +36,7 @@
     "uglify-js": "^2.4.16"
   },
   "scripts": {
-    "start": "npm run sizes & beefy benchmark.js -- -t brfs",
+    "start": "npm run sizes & beefy benchmark.js:bundle.js -- -t brfs",
     "build": "browserify benchmark.js -t brfs > bundle.js && npm run sizes",
     "sizes": "source ./sizes.sh"
   }

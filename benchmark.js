@@ -5,12 +5,33 @@ var htmlparser2 = require('htmlparser2');
 var parse5 = require('parse5');
 var htmlParseStringify = require('html-parse-stringify');
 
+var isBrowser = typeof document !== 'undefined';
+
+var log = function (message) {
+    if (isBrowser) {
+        document.write(message + '<br>');
+    } else {
+        console.log(message);
+    }
+};
+
 var testPages = [
   fs.readFileSync(__dirname + '/data/page_google.html').toString(),
-  //fs.readFileSync(__dirname + '/data/page_habrahabr-70330.html').toString(),
-  //fs.readFileSync(__dirname + '/data/page_habrahabr-index.html').toString(),
-  //fs.readFileSync(__dirname + '/data/page_wikipedia.html').toString()
+  fs.readFileSync(__dirname + '/data/page_habrahabr-70330.html').toString(),
+  fs.readFileSync(__dirname + '/data/page_habrahabr-index.html').toString(),
+  fs.readFileSync(__dirname + '/data/page_wikipedia.html').toString()
 ];
+
+if (isBrowser) {
+    var testToRun = 1;
+    var match = window.location.search.match(/test=(\d+)/);
+    if (match && match[1] && parseInt(match[1])) {
+        testToRun = parseInt(match[1]);
+    }
+
+    testPages = [ testPages[testToRun - 1] ];
+    console.log("Running test " + testToRun);
+}
 
 new Benchmark.Suite()
 
@@ -38,15 +59,15 @@ new Benchmark.Suite()
     })
 
     .on('start', function () {
-        document.write('Starting benchmark. Fasten your seatbelts...' + '<br>');
+        console.log('Starting benchmark. Fasten your seatbelts...');
     })
 
     .on('cycle', function (event) {
-        document.write(event.target.toString() + '<br>');
+        log(event.target.toString());
     })
 
     .on('complete', function () {
-        console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+        log('Fastest is ' + this.filter('fastest').pluck('name'));
     })
 
     .run();
