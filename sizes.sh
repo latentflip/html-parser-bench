@@ -7,4 +7,5 @@
 ./node_modules/.bin/browserify sizes/parse5.js > sizes/parse5.bundle.js
 ./node_modules/.bin/uglifyjs sizes/parse5.bundle.js > sizes/parse5.bundle.min.js
 
-ls -al sizes/*.min.js
+ls -alh sizes/*.min.js | sed s/\.bundle\.min\.js// | sed "s/sizes\///" | awk '{print $5 " " $9}' > sizes.txt
+cat sizes.txt

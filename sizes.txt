@@ -1,0 +1,3 @@
+2.7K html-parse-stringify
+145K htmlparser2
+260K parse5
