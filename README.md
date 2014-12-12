@@ -8,6 +8,5 @@ Ready, steady, go!
 $ git clone https://github.com/inikulin/node-html-parser-bench.git
 $ cd node-html-parser-bench
 $ npm install
-$ node benchmark.js
+$ npm start
 ```
-
